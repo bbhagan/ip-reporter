@@ -26,8 +26,6 @@ echo "LOGS_PATH = /home/pi/ip-reporter/logs" >> .env
 
 echo "Created .env"
 
-#Setup report IP on system boot
-
 
 echo "Reporting IP"
 ./reportIp.sh
