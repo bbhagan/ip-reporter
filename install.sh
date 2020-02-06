@@ -8,6 +8,9 @@ read -p "Client ID:" CLIENT_ID
 sudo apt-get install -y nodejs
 sudo apt-get install -y npm
 
+#Install the app
+npm install
+
 #remove .env file (to be created later)
 rm .env
 
