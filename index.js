@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 const fs = require("fs");
 const os = require("os");
 const moment = require("moment");
-require("dotenv").config();
+require("dotenv").config({ path: "/home/pi/ip-reporter/.env" });
 
 const callServer = async () => {
 	const SERVER_POST_URL = process.env.SERVER_POST_URL;
