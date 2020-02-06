@@ -5,7 +5,7 @@ read -p "Auth key:" AUTH_KEY
 read -p "Client ID:" CLIENT_ID
 
 # Install node & npm
-sudo apt-get install -y node
+sudo apt-get install -y nodejs
 sudo apt-get install -y npm
 
 #remove .env file (to be created later)
