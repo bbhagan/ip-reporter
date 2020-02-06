@@ -24,5 +24,8 @@ echo "CLIENT_ID = ${CLIENT_ID}" >> .env
 
 echo "Created .env"
 
+#Setup report IP on system boot
+
+
 echo "Reporting IP"
 ./reportIp.sh ipAddress=10.10.0.256
