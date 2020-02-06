@@ -8,19 +8,20 @@ const callServer = async () => {
 	const SERVER_POST_URL = process.env.SERVER_POST_URL;
 	const AUTH_KEY = process.env.AUTH_KEY;
 	const CLIENT_ID = process.env.CLIENT_ID;
+	const LOGS_PATH = process.env.LOGS_PATH;
 
 	let ipAddress = "";
 
 	//Make sure logs dir exists
 	try {
-		fs.statSync("logs").isDirectory();
+		fs.statSync(LOGS_PATH).isDirectory();
 	} catch (e) {
 		try {
-			fs.mkdir("logs", () => {
-				console.log(`Made logs dir: "logs"`);
+			fs.mkdir(LOGS_PATH, () => {
+				console.log(`Made logs dir: ${LOGS_PATH}`);
 			});
 		} catch (createDirError) {
-			console.log(`Cannot create logs dir "logs`);
+			console.log(`Cannot create logs dir ${LOGS_PATH}`);
 		}
 	}
 
@@ -42,7 +43,7 @@ const callServer = async () => {
 	const jsonResponse = await response.json();
 
 	try {
-		let writeStream = fs.createWriteStream(`logs/log.txt`, { flags: "a" });
+		let writeStream = fs.createWriteStream(`${LOGS_PATH}/log.txt`, { flags: "a" });
 
 		if (jsonResponse.statusCode === 200) {
 			writeStream.write(`${moment().format()} Report OK ${JSON.stringify(jsonBody)}${os.EOL}`);
