@@ -11,8 +11,11 @@ sudo apt-get install -y npm
 #Install the app
 npm install
 
-#remove .env file (to be created later)
-rm .env
+#remove .env file if it exists (to be created later)
+if [ -f ".env" ]
+then
+    rm .env
+fi
 
 #Populate .env
 echo "SERVER_POST_URL = http://10.10.0.162:8000/api/reportIP" > .env
