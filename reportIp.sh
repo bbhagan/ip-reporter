@@ -1,3 +1,4 @@
 #! /bin/bash
-
-node index.js ipAddress=10.10.0.256
+IP_ADDRESS=$(hostname -I)
+echo "IP Address: ${IP_ADDRESS}"
+node index.js ipAddress=${IP_ADDRESS}
