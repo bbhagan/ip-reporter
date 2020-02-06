@@ -30,6 +30,8 @@ const callServer = async () => {
 		}
 	});
 
+	console.log(`SERVER_POST_URL: ${SERVER_POST_URL}`);
+
 	const jsonBody = { client: parseInt(CLIENT_ID), IP: ipAddress };
 	const fetchOptions = {
 		method: "POST",
