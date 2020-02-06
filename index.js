@@ -11,6 +11,19 @@ const callServer = async () => {
 
 	let ipAddress = "";
 
+	//Make sure logs dir exists
+	try {
+		fs.statSync("logs").isDirectory();
+	} catch (e) {
+		try {
+			fs.mkdir("logs", () => {
+				console.log(`Made logs dir: "logs"`);
+			});
+		} catch (createDirError) {
+			console.log(`Cannot create logs dir "logs`);
+		}
+	}
+
 	process.argv.forEach(argument => {
 		if (argument.indexOf("ipAddress") > -1) {
 			ipAddress = argument.substring(argument.indexOf("=") + 1);
@@ -25,19 +38,6 @@ const callServer = async () => {
 	};
 	const response = await fetch(SERVER_POST_URL, fetchOptions);
 	const jsonResponse = await response.json();
-
-	//Make sure logs & data dir exists
-	try {
-		fs.statSync("logs").isDirectory();
-	} catch (e) {
-		try {
-			fs.mkdir("logs", () => {
-				console.log(`Made logs dir: "logs"`);
-			});
-		} catch (createDirError) {
-			console.log(`Cannot create logs dir "logs`);
-		}
-	}
 
 	try {
 		let writeStream = fs.createWriteStream(`logs/log.txt`, { flags: "a" });
