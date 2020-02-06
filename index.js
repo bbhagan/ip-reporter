@@ -1,4 +1,7 @@
 const fetch = require("node-fetch");
+const fs = require("fs");
+const os = require("os");
+const moment = require("moment");
 require("dotenv").config();
 
 const callServer = async () => {
@@ -6,11 +9,7 @@ const callServer = async () => {
 	const AUTH_KEY = process.env.AUTH_KEY;
 	const CLIENT_ID = process.env.CLIENT_ID;
 
-	console.log(`process.env: ${JSON.stringify(process.env)}`);
-	console.log(`SERVER_POST_URL: ${SERVER_POST_URL}`);
-
 	let ipAddress = "";
-	let clientId = 0;
 
 	process.argv.forEach(argument => {
 		if (argument.indexOf("ipAddress") > -1) {
@@ -18,14 +17,41 @@ const callServer = async () => {
 		}
 	});
 
+	const jsonBody = { client: parseInt(CLIENT_ID), IP: ipAddress };
 	const fetchOptions = {
 		method: "POST",
 		headers: { Authorization: AUTH_KEY, "Content-Type": "application/json" },
-		body: JSON.stringify({ client: CLIENT_ID, IP: ipAddress })
+		body: JSON.stringify(jsonBody)
 	};
 	const response = await fetch(SERVER_POST_URL, fetchOptions);
 	const jsonResponse = await response.json();
-	console.log(jsonResponse);
+
+	//Make sure logs & data dir exists
+	try {
+		fs.statSync("logs").isDirectory();
+	} catch (e) {
+		try {
+			fs.mkdir("logs", () => {
+				console.log(`Made logs dir: "logs"`);
+			});
+		} catch (createDirError) {
+			console.log(`Cannot create logs dir "logs`);
+		}
+	}
+
+	try {
+		let writeStream = fs.createWriteStream(`logs/log.txt`, { flags: "a" });
+
+		if (jsonResponse.statusCode === 200) {
+			writeStream.write(`${moment().format()} Report OK ${JSON.stringify(jsonBody)}${os.EOL}`);
+			console.log("Report OK");
+		} else {
+			writeStream.write(`${moment().format()} ${JSON.stringify(jsonBody)}${os.EOL}`);
+			console.log("Report ERROR");
+		}
+	} catch (writeError) {
+		console.log(`Error: Cannot write log ${writeError}`);
+	}
 };
 
 callServer();
