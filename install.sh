@@ -52,17 +52,13 @@ echo "}" >> reportIp.sh
 echo "IP_ADDRESS=\$(hostname -I)" >> reportIp.sh
 
 # Output timestamp to log
-echo "timestamp > ./logs/log.txt" >> reportIp.sh
+echo "timestamp >> ./logs/log.txt" >> reportIp.sh
 
 #Script to post the client IP to the server
 echo "curl --data '{\"client\": ${CLIENT_ID}, \"IP\": \"\${IP_ADDRESS}\"}' -H 'Authorization: ${AUTH_KEY}' -H 'Content-type: application/json' --silent http://${COMMAND_CONTROL_HOST}:8000/api/reportIP >> ./logs/log.txt" >> reportIp.sh
 
-echo "echo \" \" >> ./logs/log.txt" >> reportIp.sh
-
 #Create curl script to get WPT server IP
 echo "curl -H 'Authorization: ${AUTH_KEY}' --silent http://${COMMAND_CONTROL_HOST}:8000/api/getServerIPCurl | tee -a ./logs/log.txt" >> reportIp.sh
-
-echo "echo \" \" >> ./logs/log.txt" >> reportIp.sh
 
 echo "echo \"----------------------\" >> ./logs/log.txt" >> reportIp.sh
 
