@@ -30,9 +30,9 @@ echo "#! /bin/bash" > reportIp.sh
 echo " " >> reportIp.sh
 
 # Define a timestamp function
-echo "timestamp() {"
-echo "date +\"%T\""
-echo "}"
+echo "timestamp() {" >> reportIp.sh
+echo "date +\"%T\"" >> reportIp.sh
+echo "}" >> reportIp.sh
 
 #Pause to get everything up & running
 echo "sleep 10" >> reportIp.sh
