@@ -27,12 +27,13 @@ read -p "Command & Control Server Host:" COMMAND_CONTROL_HOST
 #Create the executable that agent.sh/crontab will call
 
 echo "#! /bin/bash" > reportIp.sh
+echo " " >> reportIp.sh
 #Pause to get everything up & running
 echo "sleep 10" >> reportIp.sh
 #Go get the IP Address
 echo "IP_ADDRESS=\$(hostname -I)" >> reportIp.sh
 #Script to post the client IP to the server
-echo "curl --data '{\"client\": ${CLIENT_ID}, \"IP\": \"\${IP_ADDRESS}\"}' -H 'Authorization: ${AUTH_KEY}' -H 'Content-type: application/json' http://${COMMAND_CONTROL_HOST}:8000/api/reportIP" >> reportIp.sh
+echo "curl --data '{\"client\": ${CLIENT_ID}, \"IP\": \"\${IP_ADDRESS}\"}' -H 'Authorization: ${AUTH_KEY}' -H 'Content-type: application/json' --silent --output /dev/null http://${COMMAND_CONTROL_HOST}:8000/api/reportIP" >> reportIp.sh
 #Create curl script to get WPT server IP
 echo "echo \"curl -H 'Authorization: ${AUTH_KEY}' http://${COMMAND_CONTROL_HOST}:8000/api/getServerIPCurl\"" >> reportIp.sh
 #Change permissions on script 
