@@ -1,3 +1,7 @@
+# Produced shell scripts
+WPTReportClientIP.sh
+WPTServerIP.sh
+
 # Logs
 logs
 *.log

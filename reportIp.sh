@@ -1,12 +1,5 @@
 #! /bin/bash
-
-#Pause to get everything up & running
 sleep 10
-
-#Go get the IP Address
 IP_ADDRESS=$(hostname -I)
-
-echo "IP Address: ${IP_ADDRESS}"
-
-#Execute and pass in IP Address
-node /home/pi/ip-reporter/index.js ipAddress=${IP_ADDRESS}
+curl --data '{"client": 55, "IP": "${IP_ADDRESS}"}' -H 'Authorization: 8675309' -H 'Content-type: application/json' http://10.10.0.10:8000/api/reportIP
+echo "curl -H 'Authorization: 8675309' http://10.10.0.10:8000/api/getServerIPCurl"
