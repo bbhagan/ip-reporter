@@ -1,6 +1,5 @@
 # Produced shell scripts
-WPTReportClientIP.sh
-WPTServerIP.sh
+reportIp.sh
 
 # Logs
 logs
