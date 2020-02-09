@@ -49,10 +49,10 @@ echo "   date +\"%T\"" >> reportIp.sh
 echo "}" >> reportIp.sh
 
 #Go get the IP Address
-echo "IP_ADDRESS=\$(hostname -I)" >> reportIp.sh
+echo "IP_ADDRESS=\$(ifconfig eth0 | grep inet | awk '{ print $2}')" >> reportIp.sh
 
 #Script to post the client IP to the server
-echo "curl --data '{\"client\": ${CLIENT_ID}, \"IP\": \${IP_ADDRESS}}' -H 'Authorization: ${AUTH_KEY}' -H 'Content-type: application/json' --silent http://${COMMAND_CONTROL_HOST}:8000/api/reportIP >> ./logs/log.txt" >> reportIp.sh
+echo "curl --data '{\"client\": ${CLIENT_ID}, \"IP\": \"\${IP_ADDRESS}\"}' -H 'Authorization: ${AUTH_KEY}' -H 'Content-type: application/json' --silent http://${COMMAND_CONTROL_HOST}:8000/api/reportIP >> ./logs/log.txt" >> reportIp.sh
 
 #Create curl script to get WPT server IP
 echo "curl -H 'Authorization: ${AUTH_KEY}' --silent http://${COMMAND_CONTROL_HOST}:8000/api/getServerIPCurl | tee -a ./logs/log.txt" >> reportIp.sh
