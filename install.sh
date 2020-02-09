@@ -24,6 +24,10 @@ read -p "Command & Control Server Host:" COMMAND_CONTROL_HOST
 #echo "CLIENT_ID = ${CLIENT_ID}" >> .env
 #echo "LOGS_PATH = /home/pi/ip-reporter/logs" >> .env
 
+
+#Make the logs directory
+mkdir logs
+
 #Create the executable that agent.sh/crontab will call
 
 echo "#! /bin/bash" > reportIp.sh
@@ -33,9 +37,6 @@ echo " " >> reportIp.sh
 echo "timestamp() {" >> reportIp.sh
 echo "date +\"%T\"" >> reportIp.sh
 echo "}" >> reportIp.sh
-
-#Pause to get everything up & running
-echo "sleep 10" >> reportIp.sh
 
 #Go get the IP Address
 echo "IP_ADDRESS=\$(hostname -I)" >> reportIp.sh
