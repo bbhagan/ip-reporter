@@ -28,7 +28,7 @@ echo "#! /bin/bash" > reportIp.sh
 echo " " >> reportIp.sh
 
 # Need to sleep so machine has chance to boot
-echo "sleep 10" >> reportIp.sh
+echo "sleep 20" >> reportIp.sh
 
 # Var declarations
 echo "IP_ADDRESS=\$(/sbin/ifconfig eth0 | grep inet | awk '{ print \$2}')" >> reportIp.sh
