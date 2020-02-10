@@ -64,6 +64,8 @@ const callServer = async () => {
 	} catch (writeError) {
 		console.log(`Error: Cannot write log ${writeError}`);
 	}
+
+	console.log(`${JSON.stringify(getServerIpJsonResponse)}`);
 };
 
 callServer();
