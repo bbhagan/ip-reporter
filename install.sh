@@ -47,7 +47,7 @@ echo "curl --data '{\"client\": ${CLIENT_ID}, \"IP\": \"\${IP_ADDRESS}\"}' -H 'A
 echo "curl -H 'Authorization: ${AUTH_KEY}' --silent http://${COMMAND_CONTROL_HOST}:8000/api/getServerIPCurl | tee -a ./logs/log.txt" >> reportIp.sh
 
 # Output timestamp to log
-echo " $(date '+%Y-%m-%d %H:%M:%S') >> ./logs/log.txt" >> reportIp.sh
+echo "echo \" $(date '+%Y-%m-%d %H:%M:%S') >> ./logs/log.txt\"" >> reportIp.sh
 
 #Change permissions on script 
 chmod +x reportIp.sh
