@@ -25,10 +25,6 @@ const callServer = async () => {
 		}
 	});
 
-	console.log(
-		`authKey: ${authKey} clientId: ${clientId} commandControlHost: ${commandControlHost} ipAddress: ${ipAddress}`
-	);
-
 	const sendIpDataBody = { client: parseInt(clientId), IP: ipAddress };
 	const sendIpDataFetchOptions = {
 		method: "POST",
@@ -65,7 +61,7 @@ const callServer = async () => {
 		console.log(`Error: Cannot write log ${writeError}`);
 	}
 
-	console.log(`${JSON.stringify(getServerIpJsonResponse)}`);
+	console.log(getServerIpJsonResponse.ipAddress);
 };
 
 callServer();
