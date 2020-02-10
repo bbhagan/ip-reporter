@@ -36,7 +36,7 @@ echo "COMMAND_CONTROL_HOST=${COMMAND_CONTROL_HOST}" >> reportIp.sh
 echo 'node ~/ip-reporter/index.js authKey=${AUTH_KEY} clientId=${CLIENT_ID} commandControlHost=${COMMAND_CONTROL_HOST} ipAddress=${IP_ADDRESS}' >> reportIp.sh 
 
 echo "Add these lines to agent.sh within the for i in seq 1 24 loop:"
-echo "SERVER_IP_ADDRESS=$(../ip-reporter/reportIp.sh)"
+echo "SERVER_IP_ADDRESS=\$(../ip-reporter/reportIp.sh)"
 echo "echo \"WPT Server: \${SERVER_IP_ADDRESS}\""
 echo "Modify the python wptagent.py line to use the \${SERVER_IP_ADDRESS} variable"
 
