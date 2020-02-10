@@ -31,7 +31,7 @@ echo " " >> reportIp.sh
 echo "sleep 10"
 
 # Var declarations
-echo "IP_ADDRESS=\$(/sbin/ifconfigifconfig eth0 | grep inet | awk '{ print \$2}')" >> reportIp.sh
+echo "IP_ADDRESS=\$(/sbin/ifconfig eth0 | grep inet | awk '{ print \$2}')" >> reportIp.sh
 echo "CLIENT_ID=${CLIENT_ID}" >> reportIp.sh
 echo "AUTH_KEY=${AUTH_KEY}" >> reportIp.sh
 echo "COMMAND_CONTROL_HOST=${COMMAND_CONTROL_HOST}" >> reportIp.sh
