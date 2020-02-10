@@ -24,11 +24,6 @@ read -p "Command & Control Server Host:" COMMAND_CONTROL_HOST
 #echo "CLIENT_ID = ${CLIENT_ID}" >> .env
 #echo "LOGS_PATH = /home/pi/ip-reporter/logs" >> .env
 
-# Timestamp func
-timestamp() {
-   date +"%T"
-}
-
 #Make the logs directory
 if [ -d "logs" ]
 then
@@ -45,7 +40,7 @@ echo " " >> reportIp.sh
 
 # Define a timestamp function
 echo "timestamp() {" >> reportIp.sh
-echo "   date +\"%T\"" >> reportIp.sh
+echo "   $(date '+%Y-%m-%d %H:%M:%S')" >> reportIp.sh
 echo "}" >> reportIp.sh
 
 #Go get the IP Address
@@ -58,7 +53,7 @@ echo "curl --data '{\"client\": ${CLIENT_ID}, \"IP\": \"\${IP_ADDRESS}\"}' -H 'A
 echo "curl -H 'Authorization: ${AUTH_KEY}' --silent http://${COMMAND_CONTROL_HOST}:8000/api/getServerIPCurl | tee -a ./logs/log.txt" >> reportIp.sh
 
 # Output timestamp to log
-echo "timestamp >> ./logs/log.txt" >> reportIp.sh
+echo " timestamp >> ./logs/log.txt" >> reportIp.sh
 
 #Change permissions on script 
 chmod +x reportIp.sh
