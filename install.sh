@@ -27,6 +27,8 @@ fi
 echo "#! /bin/bash" > reportIp.sh
 echo " " >> reportIp.sh
 
+echo "sleep 10"
+
 # Var declarations
 echo "IP_ADDRESS=\$(/sbin/ifconfigifconfig eth0 | grep inet | awk '{ print \$2}')" >> reportIp.sh
 echo "CLIENT_ID=${CLIENT_ID}" >> reportIp.sh
