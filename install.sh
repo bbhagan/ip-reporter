@@ -36,7 +36,7 @@ echo "CLIENT_ID=${CLIENT_ID}" >> reportIp.sh
 echo "AUTH_KEY=${AUTH_KEY}" >> reportIp.sh
 echo "COMMAND_CONTROL_HOST=${COMMAND_CONTROL_HOST}" >> reportIp.sh
 
-echo '/usr/bin/node ~/ip-reporter/index.js authKey=${AUTH_KEY} clientId=${CLIENT_ID} commandControlHost=${COMMAND_CONTROL_HOST} ipAddress=${IP_ADDRESS}' >> reportIp.sh 
+echo '/usr/bin/node /home/pi/ip-reporter/index.js authKey=${AUTH_KEY} clientId=${CLIENT_ID} commandControlHost=${COMMAND_CONTROL_HOST} ipAddress=${IP_ADDRESS}' >> reportIp.sh 
 
 echo "Add these lines to agent.sh within the for i in seq 1 24 loop:"
 echo "SERVER_IP_ADDRESS=\$(../ip-reporter/reportIp.sh)"
