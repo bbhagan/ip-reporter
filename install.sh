@@ -42,11 +42,7 @@ echo "IP_ADDRESS=\$(ifconfig eth0 | grep inet | awk '{ print \$2}')" >> reportIp
 echo "CLIENT_ID=${CLIENT_ID}" >> reportIp.sh
 echo "AUTH_KEY=${AUTH_KEY}" >> reportIp.sh
 echo "COMMAND_CONTROL_HOST=${COMMAND_CONTROL_HOST}" >> reportIp.sh
-
-
-
-#make a var to hold the string
-echo 'DATA="{\"client\": ${CLIENT_ID}, \"IP\": \"${IP_ADDRESS}\"}"' >> reportIp.sh
+echo "DATA='{\"client\": ${CLIENT_ID}, \"IP\": \"${IP_ADDRESS}\"}'" >> reportIp.sh
 
 #Script to post the client IP to the server
 echo 'curl --data \"${DATA}\" -H "Authorization: ${AUTH_KEY}" -H "Content-type: application/json" --silent http://${COMMAND_CONTROL_HOST}:8000/api/reportIP >> ./logs/log.txt' >> reportIp.sh
