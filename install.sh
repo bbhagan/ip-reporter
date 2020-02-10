@@ -49,13 +49,13 @@ echo "COMMAND_CONTROL_HOST=${COMMAND_CONTROL_HOST}" >> reportIp.sh
 echo 'DATA={"client": ${CLIENT_ID}, "IP": "${IP_ADDRESS}"}' >> reportIp.sh
 
 #Script to post the client IP to the server
-echo 'curl --data ${DATA} -H "Authorization: ${AUTH_KEY}" -H "Content-type: application/json" --silent http://${COMMAND_CONTROL_HOST}:8000/api/reportIP >> ./logs/log.txt' >> reportIp.sh
+echo 'curl --data \"${DATA}\" -H "Authorization: ${AUTH_KEY}" -H "Content-type: application/json" --silent http://${COMMAND_CONTROL_HOST}:8000/api/reportIP >> ./logs/log.txt' >> reportIp.sh
 
 #Create curl script to get WPT server IP
 echo 'curl -H "Authorization: ${AUTH_KEY}" --silent http://${COMMAND_CONTROL_HOST}:8000/api/getServerIPCurl | tee -a ./logs/log.txt' >> reportIp.sh
 
 # Output timestamp to log
-echo 'echo " $(date \"+%Y-%m-%d %H:%M:%S\")" >> ./logs/log.txt' >> reportIp.sh
+echo "echo \" $(date '+%Y-%m-%d %H:%M:%S')\" >> ./logs/log.txt" >> reportIp.sh
 
 #Change permissions on script 
 chmod +x reportIp.sh
