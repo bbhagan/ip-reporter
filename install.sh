@@ -40,7 +40,7 @@ echo " " >> reportIp.sh
 
 # Define a timestamp function
 echo "timestamp() {" >> reportIp.sh
-echo "   $(date '+%Y-%m-%d %H:%M:%S')" >> reportIp.sh
+echo "   \$(date '+%Y-%m-%d %H:%M:%S')" >> reportIp.sh
 echo "}" >> reportIp.sh
 
 #Go get the IP Address
