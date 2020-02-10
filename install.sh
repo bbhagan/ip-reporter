@@ -27,11 +27,10 @@ read -p "Command & Control Server Host:" COMMAND_CONTROL_HOST
 #Make the logs directory
 if [ -d "logs" ]
 then
-    echo "Ran install" >> ./logs/log.txt
+    echo "Ran install\n\r" >> ./logs/log.txt
 else
     mkdir logs
 fi
-
 
 #Create the executable that agent.sh/crontab will call
 
