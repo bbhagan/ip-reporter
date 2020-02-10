@@ -27,6 +27,7 @@ fi
 echo "#! /bin/bash" > reportIp.sh
 echo " " >> reportIp.sh
 
+# Need to sleep so machine has chance to boot
 echo "sleep 10"
 
 # Var declarations
