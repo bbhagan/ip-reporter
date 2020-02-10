@@ -6,30 +6,20 @@ read -p "Client ID:" CLIENT_ID
 read -p "Command & Control Server Host:" COMMAND_CONTROL_HOST 
 
 # Install node & npm
-#sudo apt-get install -y nodejs
-#sudo apt-get install -y npm
+sudo apt-get install -y nodejs
+sudo apt-get install -y npm
 
 #Install the app
-#npm install
-
-#remove .env file if it exists (to be created later)
-#if [ -f ".env" ]
-#then
-#    rm .env
-#fi
-
-#Populate .env
-#echo "SERVER_POST_URL = http://${COMMAND_CONTROL_HOST}:8000/api/reportIP" > .env
-#echo "AUTH_KEY = ${AUTH_KEY}" >> .env
-#echo "CLIENT_ID = ${CLIENT_ID}" >> .env
-#echo "LOGS_PATH = /home/pi/ip-reporter/logs" >> .env
+npm install
 
 #Make the logs directory
-if [ -d "logs" ]
+if [ -d "/var/logs/ip-reporter" ]
 then
-    echo "Ran install" >> ./logs/log.txt
+    echo "Re-ran install" >> /var/log/ip-reporter/ip-reporter.log
 else
-    mkdir logs
+    sudo mkdir /var/logs/ip-reporter/
+    sudo chown pi:pi /var/logs/ip-reporter/
+    echo "New install" >> /var/log/ip-reporter/ip-reporter.log
 fi
 
 #Create the executable that agent.sh/crontab will call
@@ -43,16 +33,12 @@ echo "CLIENT_ID=${CLIENT_ID}" >> reportIp.sh
 echo "AUTH_KEY=${AUTH_KEY}" >> reportIp.sh
 echo "COMMAND_CONTROL_HOST=${COMMAND_CONTROL_HOST}" >> reportIp.sh
 
-#Script to post the client IP to the server
-#echo 'curl -H "Authorization: ${AUTH_KEY}" --silent http://${COMMAND_CONTROL_HOST}:8000/api/reportIP?client=${CLIENT_ID}&IP=${IP_ADDRESS} >> ./logs/log.txt' >> reportIp.sh
-
-#Create curl script to get WPT server IP
-#echo 'curl -H "Authorization: ${AUTH_KEY}" --silent http://${COMMAND_CONTROL_HOST}:8000/api/getServerIPCurl | tee -a ./logs/log.txt' >> reportIp.sh
-
-# Output timestamp to log
-#echo "echo \" $(date '+%Y-%m-%d %H:%M:%S')\" >> ./logs/log.txt" >> reportIp.sh
-
 echo 'node ~/ip-reporter/index.js authKey=${AUTH_KEY} clientId=${CLIENT_ID} commandControlHost=${COMMAND_CONTROL_HOST} ipAddress=${IP_ADDRESS}' >> reportIp.sh 
+
+echo "Add these lines to agent.sh (within the for i in `seq 1 24` loop):"
+echo "SERVER_IP_ADDRESS=$(../ip-reporter/reportIp.sh)"
+echo "echo \"WPT Server: \${SERVER_IP_ADDRESS}\""
+echo "Modify the python wptagent.py line to use the \${SERVER_IP_ADDRESS} variable"
 
 #Change permissions on script 
 chmod +x reportIp.sh
