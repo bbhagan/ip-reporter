@@ -50,17 +50,15 @@ const callServer = async () => {
 
 		if (sendIpDataJsonResponse.statusCode === 200) {
 			writeStream.write(`${moment().format()} Report IP OK ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
-			console.log("Report IP OK");
 		} else {
-			writeStream.write(`${moment().format()} ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
+			writeStream.write(`${moment().format()} Report IP error ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
 			console.log("Report ERROR");
 		}
 
 		if (getServerIpJsonResponse.statusCode === 200) {
-			writeStream.write(`${moment().format()} Fetch server IP ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
-			console.log("Fetch IP OK");
+			writeStream.write(`${moment().format()} Fetch server IP ${JSON.stringify(getServerIpJsonResponse)}${os.EOL}`);
 		} else {
-			writeStream.write(`${moment().format()} ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
+			writeStream.write(`${moment().format()} Fetch server IP error${os.EOL}`);
 			console.log("Report/Fetch ERROR");
 		}
 	} catch (writeError) {
