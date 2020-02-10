@@ -52,7 +52,7 @@ echo "COMMAND_CONTROL_HOST=${COMMAND_CONTROL_HOST}" >> reportIp.sh
 # Output timestamp to log
 #echo "echo \" $(date '+%Y-%m-%d %H:%M:%S')\" >> ./logs/log.txt" >> reportIp.sh
 
-echo "node index.js authKey=${AUTH_KEY} clientId=${CLIENT_ID} commandControlHost=${COMMAND_CONTROL_HOST} ipAddress=${IP_ADDRESS}" >> reportIp.sh 
+echo 'node index.js authKey=${AUTH_KEY} clientId=${CLIENT_ID} commandControlHost=${COMMAND_CONTROL_HOST} ipAddress=${IP_ADDRESS}' >> reportIp.sh 
 
 #Change permissions on script 
 chmod +x reportIp.sh
