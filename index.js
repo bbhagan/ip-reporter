@@ -42,7 +42,7 @@ const callServer = async () => {
 	const getServerIpJsonResponse = await getServerIpDataResponse.json();
 
 	try {
-		let writeStream = fs.createWriteStream(`/var/log/ip-reporter.log`, { flags: "a" });
+		let writeStream = fs.createWriteStream(`/var/log/ip-reporter/ip-reporter.log`, { flags: "a" });
 
 		if (sendIpDataJsonResponse.statusCode === 200) {
 			writeStream.write(`${moment().format()} Report IP OK ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
