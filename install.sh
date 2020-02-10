@@ -43,3 +43,8 @@ echo "Modify the python wptagent.py line to use the \${SERVER_IP_ADDRESS} variab
 #Change permissions on script 
 chmod +x reportIp.sh
 
+echo "Calling reportIp.sh"
+./reportIp.sh
+
+echo "Done!"
+
