@@ -12,13 +12,13 @@ sudo apt-get install -y npm
 #Install the app
 npm install
 
-#Make the logs directory
-if [ -d "/var/logs/ip-reporter" ]
+#Make the log directory
+if [ -d "/var/log/ip-reporter" ]
 then
     echo "Re-ran install" >> /var/log/ip-reporter/ip-reporter.log
 else
-    sudo mkdir /var/logs/ip-reporter/
-    sudo chown pi:pi /var/logs/ip-reporter/
+    sudo mkdir /var/log/ip-reporter/
+    sudo chown pi:pi /var/log/ip-reporter/
     echo "New install" >> /var/log/ip-reporter/ip-reporter.log
 fi
 
