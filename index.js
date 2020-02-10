@@ -23,10 +23,11 @@ const callServer = async () => {
 		if (argument.indexOf("authKey") > -1) {
 			authKey = argument.substring(argument.indexOf("=") + 1);
 		}
-		if (argument.indexOf("authKey") > -1) {
-			authKey = argument.substring(argument.indexOf("=") + 1);
-		}
 	});
+
+	console.log(
+		`authKey: ${authKey} clientId: ${clientId} commandControlHost: ${commandControlHost} ipAddress: ${ipAddress}`
+	);
 
 	const sendIpDataBody = { client: parseInt(clientId), IP: ipAddress };
 	const sendIpDataFetchOptions = {
