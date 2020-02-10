@@ -5,50 +5,62 @@ const moment = require("moment");
 require("dotenv").config({ path: "/home/pi/ip-reporter/.env" });
 
 const callServer = async () => {
-	const SERVER_POST_URL = process.env.SERVER_POST_URL;
-	const AUTH_KEY = process.env.AUTH_KEY;
-	const CLIENT_ID = process.env.CLIENT_ID;
-	const LOGS_PATH = process.env.LOGS_PATH;
-
 	let ipAddress = "";
-
-	//Make sure logs dir exists
-	try {
-		fs.statSync(LOGS_PATH).isDirectory();
-	} catch (e) {
-		try {
-			fs.mkdir(LOGS_PATH, () => {
-				console.log(`Made logs dir: ${LOGS_PATH}`);
-			});
-		} catch (createDirError) {
-			console.log(`Cannot create logs dir ${LOGS_PATH}`);
-		}
-	}
+	let commandControlHost = "";
+	let clientId;
+	let authKey = "";
 
 	process.argv.forEach(argument => {
 		if (argument.indexOf("ipAddress") > -1) {
 			ipAddress = argument.substring(argument.indexOf("=") + 1);
 		}
+		if (argument.indexOf("commandControlHost") > -1) {
+			commandControlHost = argument.substring(argument.indexOf("=") + 1);
+		}
+		if (argument.indexOf("clientId") > -1) {
+			clientId = argument.substring(argument.indexOf("=") + 1);
+		}
+		if (argument.indexOf("authKey") > -1) {
+			authKey = argument.substring(argument.indexOf("=") + 1);
+		}
+		if (argument.indexOf("authKey") > -1) {
+			authKey = argument.substring(argument.indexOf("=") + 1);
+		}
 	});
 
-	const jsonBody = { client: parseInt(CLIENT_ID), IP: ipAddress };
-	const fetchOptions = {
+	const sendIpDataBody = { client: parseInt(clientId), IP: ipAddress };
+	const sendIpDataFetchOptions = {
 		method: "POST",
-		headers: { Authorization: AUTH_KEY, "Content-Type": "application/json" },
-		body: JSON.stringify(jsonBody)
+		headers: { Authorization: authKey, "Content-Type": "application/json" },
+		body: JSON.stringify(sendIpDataBody)
 	};
-	const response = await fetch(SERVER_POST_URL, fetchOptions);
-	const jsonResponse = await response.json();
+	const sendIpDataResponse = await fetch(`http://${commandControlHost}:8000/api/reportIP`, sendIpDataFetchOptions);
+	const sendIpDataJsonResponse = await sendIpDataResponse.json();
+
+	const getServerIpFetchOptions = { headers: { Authorization: authKey } };
+	const getServerIpDataResponse = await fetch(
+		`http://${commandControlHost}:8000/api/getServerIP`,
+		getServerIpFetchOptions
+	);
+	const getServerIpJsonResponse = await getServerIpDataResponse.json();
 
 	try {
-		let writeStream = fs.createWriteStream(`${LOGS_PATH}/log.txt`, { flags: "a" });
+		let writeStream = fs.createWriteStream(`/var/log/ip-reporter.log`, { flags: "a" });
 
-		if (jsonResponse.statusCode === 200) {
-			writeStream.write(`${moment().format()} Report OK ${JSON.stringify(jsonBody)}${os.EOL}`);
-			console.log("Report OK");
+		if (sendIpDataJsonResponse.statusCode === 200) {
+			writeStream.write(`${moment().format()} Report IP OK ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
+			console.log("Report IP OK");
 		} else {
-			writeStream.write(`${moment().format()} ${JSON.stringify(jsonBody)}${os.EOL}`);
+			writeStream.write(`${moment().format()} ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
 			console.log("Report ERROR");
+		}
+
+		if (getServerIpJsonResponse.statusCode === 200) {
+			writeStream.write(`${moment().format()} Fetch server IP ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
+			console.log("Fetch IP OK");
+		} else {
+			writeStream.write(`${moment().format()} ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
+			console.log("Report/Fetch ERROR");
 		}
 	} catch (writeError) {
 		console.log(`Error: Cannot write log ${writeError}`);

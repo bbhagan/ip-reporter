@@ -42,16 +42,17 @@ echo "IP_ADDRESS=\$(ifconfig eth0 | grep inet | awk '{ print \$2}')" >> reportIp
 echo "CLIENT_ID=${CLIENT_ID}" >> reportIp.sh
 echo "AUTH_KEY=${AUTH_KEY}" >> reportIp.sh
 echo "COMMAND_CONTROL_HOST=${COMMAND_CONTROL_HOST}" >> reportIp.sh
-echo 'DATA="{\"client\": ${CLIENT_ID}, \"IP\": \"${IP_ADDRESS}\"}"' >> reportIp.sh
 
 #Script to post the client IP to the server
-echo 'curl -H "Authorization: ${AUTH_KEY}" --silent http://${COMMAND_CONTROL_HOST}:8000/api/reportIP?client=${CLIENT_ID}&IP=${IP_ADDRESS} >> ./logs/log.txt' >> reportIp.sh
+#echo 'curl -H "Authorization: ${AUTH_KEY}" --silent http://${COMMAND_CONTROL_HOST}:8000/api/reportIP?client=${CLIENT_ID}&IP=${IP_ADDRESS} >> ./logs/log.txt' >> reportIp.sh
 
 #Create curl script to get WPT server IP
-echo 'curl -H "Authorization: ${AUTH_KEY}" --silent http://${COMMAND_CONTROL_HOST}:8000/api/getServerIPCurl | tee -a ./logs/log.txt' >> reportIp.sh
+#echo 'curl -H "Authorization: ${AUTH_KEY}" --silent http://${COMMAND_CONTROL_HOST}:8000/api/getServerIPCurl | tee -a ./logs/log.txt' >> reportIp.sh
 
 # Output timestamp to log
-echo "echo \" $(date '+%Y-%m-%d %H:%M:%S')\" >> ./logs/log.txt" >> reportIp.sh
+#echo "echo \" $(date '+%Y-%m-%d %H:%M:%S')\" >> ./logs/log.txt" >> reportIp.sh
+
+echo "node index.js authKey=${AUTH_KEY} clientId=${CLIENT_ID} commandControlHost=${COMMAND_CONTROL_HOST} ipAddress=${IP_ADDRESS}" >> reportIp.sh 
 
 #Change permissions on script 
 chmod +x reportIp.sh
