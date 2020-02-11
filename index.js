@@ -31,14 +31,11 @@ const callServer = async () => {
 		headers: { Authorization: authKey, "Content-Type": "application/json" },
 		body: JSON.stringify(sendIpDataBody)
 	};
-	const sendIpDataResponse = await fetch(`http://${commandControlHost}:8000/api/reportIP`, sendIpDataFetchOptions);
+	const sendIpDataResponse = await fetch(`http://${commandControlHost}/api/reportIP`, sendIpDataFetchOptions);
 	const sendIpDataJsonResponse = await sendIpDataResponse.json();
 
 	const getServerIpFetchOptions = { headers: { Authorization: authKey } };
-	const getServerIpDataResponse = await fetch(
-		`http://${commandControlHost}:8000/api/getServerIP`,
-		getServerIpFetchOptions
-	);
+	const getServerIpDataResponse = await fetch(`http://${commandControlHost}/api/getServerIP`, getServerIpFetchOptions);
 	const getServerIpJsonResponse = await getServerIpDataResponse.json();
 
 	try {
