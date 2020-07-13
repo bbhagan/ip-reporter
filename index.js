@@ -42,6 +42,8 @@ const callServer = async () => {
 			writeStream.write(`${moment().format()} Report IP error ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
 			console.log("Report ERROR");
 		}
+
+		writeStream.end();
 	} catch (writeError) {
 		console.log(`Error: Cannot write log ${writeError}`);
 	}
