@@ -10,7 +10,7 @@ const callServer = async () => {
 	let clientId;
 	let authKey = "";
 
-	process.argv.forEach(argument => {
+	process.argv.forEach((argument) => {
 		if (argument.indexOf("ipAddress") > -1) {
 			ipAddress = argument.substring(argument.indexOf("=") + 1);
 		}
@@ -29,15 +29,10 @@ const callServer = async () => {
 	const sendIpDataFetchOptions = {
 		method: "POST",
 		headers: { Authorization: authKey, "Content-Type": "application/json" },
-		body: JSON.stringify(sendIpDataBody)
+		body: JSON.stringify(sendIpDataBody),
 	};
 	const sendIpDataResponse = await fetch(`http://${commandControlHost}/api/reportIP`, sendIpDataFetchOptions);
 	const sendIpDataJsonResponse = await sendIpDataResponse.json();
-
-	const getServerIpFetchOptions = { headers: { Authorization: authKey } };
-	const getServerIpDataResponse = await fetch(`http://${commandControlHost}/api/getServerIP`, getServerIpFetchOptions);
-	const getServerIpJsonResponse = await getServerIpDataResponse.json();
-
 	try {
 		let writeStream = fs.createWriteStream(`/var/log/ip-reporter/ip-reporter.log`, { flags: "a" });
 
@@ -47,18 +42,12 @@ const callServer = async () => {
 			writeStream.write(`${moment().format()} Report IP error ${JSON.stringify(sendIpDataBody)}${os.EOL}`);
 			console.log("Report ERROR");
 		}
-
-		if (getServerIpJsonResponse.statusCode === 200) {
-			writeStream.write(`${moment().format()} Fetch server IP ${JSON.stringify(getServerIpJsonResponse)}${os.EOL}`);
-		} else {
-			writeStream.write(`${moment().format()} Fetch server IP error${os.EOL}`);
-			console.log("Report/Fetch ERROR");
-		}
 	} catch (writeError) {
 		console.log(`Error: Cannot write log ${writeError}`);
 	}
 
-	console.log(getServerIpJsonResponse.ipAddress);
+	//This hands off the Server IP address to the shellscript (using STOUT)
+	console.log(sendIpDataJsonResponse.serverIP);
 };
 
 callServer();
