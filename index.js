@@ -50,7 +50,7 @@ const callServer = async () => {
 
 		writeStream.end();
 	} catch (writeError) {
-		console.log(`Error: Cannot write log ${writeError}`);
+		//console.log(`Error: Cannot write log ${writeError}`);
 		sendIpDataJsonResponse.serverIP = "10.10.0.90";
 	}
 
