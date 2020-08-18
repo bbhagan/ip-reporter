@@ -31,9 +31,14 @@ const callServer = async () => {
 		headers: { Authorization: authKey, "Content-Type": "application/json" },
 		body: JSON.stringify(sendIpDataBody),
 	};
-	const sendIpDataResponse = await fetch(`http://${commandControlHost}/api/reportIP`, sendIpDataFetchOptions);
-	const sendIpDataJsonResponse = await sendIpDataResponse.json();
+
+	const sendIpDataResponse = {};
+	const sendIpDataJsonResponse = {};
+
 	try {
+		sendIpDataResponse = await fetch(`http://${commandControlHost}/api/reportIP`, sendIpDataFetchOptions);
+		sendIpDataJsonResponse = await sendIpDataResponse.json();
+
 		let writeStream = fs.createWriteStream(`/var/log/ip-reporter/ip-reporter.log`, { flags: "a" });
 
 		if (sendIpDataJsonResponse.statusCode === 200) {
@@ -46,6 +51,7 @@ const callServer = async () => {
 		writeStream.end();
 	} catch (writeError) {
 		console.log(`Error: Cannot write log ${writeError}`);
+		sendIpDataJsonResponse.serverIP = "10.10.0.90";
 	}
 
 	//This hands off the Server IP address to the shellscript (using STOUT)
